@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import { Routes } from '@generouted/react-router'
 import { ThemeProvider, BaseStyles } from '@primer/react'
 
@@ -14,10 +15,12 @@ const root = createRoot(rootElement)
 root.render(
     <StrictMode>
         <ThemeProvider colorMode="auto">
-            <BaseStyles>
-                <ColorModeSwitcher />
-                <Routes basename={import.meta.env.VITE_BASE_URL} />
-            </BaseStyles>
+            <BrowserRouter basename={import.meta.env.VITE_BASE_URL}>
+                <BaseStyles>
+                    <ColorModeSwitcher />
+                    <Routes />
+                </BaseStyles>
+            </BrowserRouter>
         </ThemeProvider>
     </StrictMode>
 )
