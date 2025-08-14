@@ -1,14 +1,11 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.192.0/containers/javascript-node
 {
     "name": "Node.js",
     "build": {
         "dockerfile": "Dockerfile",
-        // Update 'VARIANT' to pick a Node version: 12, 14, 16
-        "args": { "VARIANT": "16" }
+        // On passe à Node 20 (compatible Vite/Primer)
+        "args": { "VARIANT": "20" }
     },
 
-    // Set *default* container specific settings.json values on container create.
     "settings": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -17,17 +14,18 @@
         }
     },
 
-    // Add the IDs of extensions you want installed when the container is created.
-    "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"],
+    "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+    ],
 
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
+    // Si tu veux exposer le dev server vite
+    "forwardPorts": [5173],
 
-    // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "nvm install --default && nvm use --default && yarn install",
+    // On garde yarn si tu préfères, mais sans nvm
+    "postCreateCommand": "yarn install",
 
     "postStartCommand": "yarn dev",
 
-    // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "node"
 }
