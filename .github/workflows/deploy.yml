@@ -63,7 +63,7 @@ jobs:
       contents: write
     environment:
       name: pr-${{ github.event.number }}
-      url: ${{ steps.preview.outputs.preview_url }}
+      url: ${{ steps.preview.outputs.preview-url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -86,7 +86,7 @@ jobs:
 
       - name: Post custom comment
         env:
-          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+          PREVIEW_URL: ${{ steps.preview.outputs.preview-url }}
         uses: actions/github-script@v7
         with:
           script: |
