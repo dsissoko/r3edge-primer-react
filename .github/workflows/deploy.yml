@@ -81,7 +81,7 @@ jobs:
         with:
           source-dir: dist
           umbrella-dir: pr-preview
-          pages-base-url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          pages-base-url: ${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           comment: false
 
       - name: Post custom comment
