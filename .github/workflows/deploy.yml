@@ -22,6 +22,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          VITE_BASE_URL: /r3edge-trading-app/
 
       - name: Upload static files as artifact
         id: deployment
