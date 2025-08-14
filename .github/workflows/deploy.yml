@@ -85,6 +85,8 @@ jobs:
           comment: false
 
       - name: Post custom comment
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview-url }}
         uses: actions/github-script@v7
         with:
           script: |
