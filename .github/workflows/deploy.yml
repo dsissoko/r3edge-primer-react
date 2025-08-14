@@ -60,8 +60,7 @@ jobs:
     needs: build
     permissions:
       pull-requests: write
-      pages: write
-      id-token: write
+      contents: write
     environment:
       name: pr-${{ github.event.number }}
       url: ${{ steps.preview.outputs.preview_url }}
