@@ -66,6 +66,7 @@ Ce projet est configuré pour être déployé automatiquement sur les plateforme
 
 -   **Vercel** : Liez votre dépôt à un nouveau projet Vercel. La configuration `vercel.json` sera détectée automatiquement.
     -   URL de déploiement : `https://r3edge-primer-react.netlify.app/`
+> 
 
 -   **Netlify** : Liez votre dépôt à un nouveau site Netlify. La configuration `netlify.toml` sera détectée automatiquement.
     -   URL de déploiement : `https://r3edge-primer-react.netlify.app/`
@@ -74,10 +75,7 @@ Ce projet est configuré pour être déployé automatiquement sur les plateforme
 
 [![Dependabot Updates](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/dependabot/dependabot-updates)
 [![Deploy](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/deploy.yml/badge.svg)](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/deploy.yml)
-[![pages-build-deployment](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/pages/pages-build-deployment)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/0425ea76-64ff-43bc-b478-ea228b042648/deploy-status)](https://app.netlify.com/projects/r3edge-primer-react/deploys)
-
-
 
 
 📫 Maintenu par [@dsissoko](https://github.com/dsissoko) – Ce projet est une évolution du template officiel [Primer React](https://github.com/primer/react-template).
