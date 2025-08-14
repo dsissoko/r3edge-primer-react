@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import generouted from '@generouted/react-router/plugin'
 import postcssGlobalData from '@csstools/postcss-global-data'
 import postcssPresetEnv from 'postcss-preset-env'
 import browsers from '@github/browserslist-config'
@@ -10,7 +9,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '')
     return {
         base: env.VITE_BASE_URL || '/',
-        plugins: [react(), generouted()],
+        plugins: [react()],
         server: { port: 1234 },
         css: {
             postcss: {

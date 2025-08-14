@@ -10,7 +10,6 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@generouted/react-router": "^1.19.11",
         "@primer/octicons-react": "^19.15.5",
         "@primer/primitives": "^11.1.0",
         "@primer/react": "^37.26.0",
