@@ -11,8 +11,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    outputs:
-      base_url: ${{ steps.set_base_url.outputs.base_url }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -32,61 +30,57 @@ jobs:
         run: npm run build
         env:
           VITE_BASE_URL: ${{ steps.set_base_url.outputs.base_url }}
-      - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: github-pages
+          name: dist
           path: dist/
 
   deploy_production:
-    name: Deploy to GitHub Pages
+    name: Deploy Production to gh-pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  deploy_preview:
-    name: Deploy Preview
-    if: github.event_name == 'pull_request'
-    needs: build
     permissions:
-      pull-requests: write
       contents: write
-    environment:
-      name: pr-${{ github.event.number }}
-      url: ${{ steps.preview.outputs.preview-url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Download build artifact
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: dist
           path: dist
-
-      - name: Deploy PR Preview
-        id: preview
-        uses: rossjrw/pr-preview-action@v1
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          source-dir: dist
-          umbrella-dir: pr-preview
-          pages-base-url: ${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
-          comment: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          # This will clean the root of the gh-pages branch for a clean deployment
+          keep_files: false
 
-      - name: Post custom comment
-        env:
-          PREVIEW_URL: ${{ steps.preview.outputs.preview-url }}
+  deploy_preview:
+    name: Deploy Preview to gh-pages
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - name: Deploy to gh-pages subdirectory
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          # Deploy to a subdirectory like 'pr-preview/pr-15'
+          destination_dir: ./pr-preview/pr-${{ github.event.number }}
+          # Keep other preview directories
+          keep_files: true
+      - name: Post Preview URL as comment
         uses: actions/github-script@v7
         with:
           script: |
@@ -95,8 +89,9 @@ jobs:
             const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
             const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const prodLink = `https://${context.repo.owner}.github.io/${context.repo.repo}/`;
-            const previewLink = process.env.PREVIEW_URL;
-            
+            // Manually construct the reliable preview link
+            const previewLink = `https://${context.repo.owner}.github.io/${context.repo.repo}/pr-preview/pr-${context.issue.number}/`;
+
             const body = `
             **Deployment Summary**
 
@@ -132,7 +127,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/r3edge-primer-react
+          images: ${{ secrets.D-OCKERHUB_USERNAME }}/r3edge-primer-react
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
