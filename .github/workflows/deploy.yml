@@ -93,7 +93,7 @@ jobs:
             const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
             const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const prodLink = `https://${context.repo.owner}.github.io/${context.repo.repo}/`;
-            const previewLink = `${{ steps.preview.outputs.preview_url }}`;
+            const previewLink = process.env.PREVIEW_URL;
             
             const body = `
             **Deployment Summary**
