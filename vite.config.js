@@ -7,6 +7,7 @@ import browsers from '@github/browserslist-config'
 import { globSync } from 'glob'
 
 export default defineConfig({
+    base: '/r3edge-trading-app/',
     plugins: [react(), generouted()],
     server: { port: 1234 },
     css: {
