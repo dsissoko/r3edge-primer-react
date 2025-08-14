@@ -33,7 +33,7 @@ jobs:
         env:
           VITE_BASE_URL: ${{ steps.set_base_url.outputs.base_url }}
       - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: dist/
