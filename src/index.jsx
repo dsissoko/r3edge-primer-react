@@ -16,7 +16,7 @@ root.render(
         <ThemeProvider colorMode="auto">
             <BaseStyles>
                 <ColorModeSwitcher />
-                <Routes />
+                <Routes basename={import.meta.env.VITE_BASE_URL} />
             </BaseStyles>
         </ThemeProvider>
     </StrictMode>
