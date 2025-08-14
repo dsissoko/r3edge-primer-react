@@ -35,6 +35,7 @@ jobs:
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages
           path: dist/
 
   deploy_production:
@@ -66,52 +67,51 @@ jobs:
       url: ${{ steps.preview.outputs.preview_url }}
     runs-on: ubuntu-latest
     steps:
-  steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Download build artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: github-pages
-        path: dist
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: dist
 
-    - name: Deploy PR Preview
-      id: preview
-      uses: rossjrw/pr-preview-action@v1
-      with:
-        source-dir: dist
-        umbrella-dir: pr-preview
-        comment: false
+      - name: Deploy PR Preview
+        id: preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: dist
+          umbrella-dir: pr-preview
+          comment: false
 
-    - name: Post custom comment
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const commitSha = context.payload.pull_request.head.sha;
-          const shortSha = commitSha.substring(0, 7);
-          const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
-          const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-          const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
-          const previewLink = `${{ steps.preview.outputs.preview_url }}`;
+      - name: Post custom comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commitSha = context.payload.pull_request.head.sha;
+            const shortSha = commitSha.substring(0, 7);
+            const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
+            const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
+            const previewLink = `${{ steps.preview.outputs.preview_url }}`;
 
-          const body = `
-          **Deployment Summary**
+            const body = `
+            **Deployment Summary**
 
-          | Category | Link |
-          | :--- | :--- |
-          | 🔨 **Latest commit** | [${shortSha}](${commitLink}) |
-          | 🔍 **Latest deploy log** | [View Log](${runLink}) |
-          | 😎 **Deploy Preview** | [${previewLink}](${previewLink}) |
-          | 🌐 **Reference Production** | [Production Site](${prodLink}) |
-          `;
+            | Category | Link |
+            | :--- | :--- |
+            | 🔨 **Latest commit** | [${shortSha}](${commitLink}) |
+            | 🔍 **Latest deploy log** | [View Log](${runLink}) |
+            | 😎 **Deploy Preview** | [${previewLink}](${previewLink}) |
+            | 🌐 **Reference Production** | [Production Site](${prodLink}) |
+            `;
 
-          github.rest.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: context.issue.number,
-            body: body
-          });
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: body
+            });
 
   build_and_push_to_dockerhub:
     name: Build and Push to Docker Hub
