@@ -1,0 +1,15 @@
+# Ignore Git and project-specific files
+.git
+.gitignore
+.github
+.vscode
+GEMINI.md
+
+# Ignore local development artifacts
+node_modules
+npm-debug.log
+.nvmrc
+
+# Ignore build output, it will be generated inside the container
+dist
+.DS_Store
