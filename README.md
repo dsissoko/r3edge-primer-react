@@ -1,4 +1,4 @@
-# Primer React Supercharged Template ⚡⚛️
+# r3edge Primer React Template | ![Logo](logo_ds.png)
 
 **Un template de démarrage pour React, suralimenté pour des déploiements multi-plateformes fluides.**
 
