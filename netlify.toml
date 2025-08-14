@@ -1,0 +1,15 @@
+# Fichier de configuration pour Netlify
+
+[build]
+  # Commande pour construire le site
+  command = "npm run build"
+  
+  # Dossier qui sera publié après le build
+  publish = "dist"
+
+# Règle de redirection pour les applications Single-Page (SPA)
+# Cela assure que toutes les routes sont gérées par React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
