@@ -21,9 +21,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build project
-        run: npm run build
-        env:
-          VITE_BASE_URL: /r3edge-trading-app/
+        run: npm run build -- --base=/r3edge-trading-app/
 
       - name: Upload static files as artifact
         id: deployment
