@@ -11,86 +11,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v3
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-      - name: Build project
-        run: npm run build
-        env:
-          # For PR previews, the base URL needs to be adjusted. It should end with a slash.
-          VITE_BASE_URL: ${{ github.event_name == 'pull_request' && format('/{0}/pull/{1}/', github.event.repository.name, github.event.number) || format('/{0}/', github.event.repository.name) }}
-      - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/
-
-  deploy_production:
-    name: Deploy to GitHub Pages
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  deploy_preview:
-    name: Deploy Preview
-    if: github.event_name == 'pull_request'
-    needs: build
-    permissions:
-      pull-requests: write
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-      - name: Post Preview URL as comment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const commitSha = context.payload.pull_request.head.sha;
-            const shortSha = commitSha.substring(0, 7);
-            const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
-            const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
-            const previewLink = `${{ steps.deployment.outputs.page_url }}`;
-
-            const body = `
-            **Deployment Summary**
-
-            | Category | Link |
-            | :--- | :--- |
-            | 🔨 **Latest commit** | [${shortSha}](${commitLink}) |
-            | 🔍 **Latest deploy log** | [View Log](${runLink}) |
-            name: Deploy & Preview
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
     outputs:
       base_url: ${{ steps.set_base_url.outputs.base_url }}
     steps:
@@ -104,11 +24,8 @@ jobs:
         id: set_base_url
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            # For PR previews, the base URL is dynamic and determined by the deploy action.
-            # We set it to a placeholder that Vite can handle, but the final URL is managed by GitHub Pages.
             echo "base_url=/" >> $GITHUB_OUTPUT
           else
-            # For production, it's the repository name.
             echo "base_url=/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
           fi
       - name: Build project
@@ -145,7 +62,6 @@ jobs:
       pages: write
       id-token: write
     environment:
-      # Use a unique environment name for each PR to enable separate preview deployments
       name: pr-${{ github.event.number }}
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
@@ -161,102 +77,26 @@ jobs:
             const shortSha = commitSha.substring(0, 7);
             const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
             const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
             const previewLink = `${{ steps.deployment.outputs.page_url }}`;
 
             const body = `
-            **Deployment Preview**
-
-            A preview of this pull request has been deployed.
+            **Deployment Summary**
 
             | Category | Link |
             | :--- | :--- |
             | 🔨 **Latest commit** | [${shortSha}](${commitLink}) |
-            | 🔍 **Workflow run** | [View Log](${runLink}) |
-            | 🚀 **Preview URL** | [${previewLink}](${previewLink}) |
-            `;
-
-            // Find and update a previous comment from this bot, or create a new one
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-
-            const botComment = comments.find(comment =>
-              comment.user.login === 'github-actions[bot]' && comment.body.includes('Deployment Preview')
-            );
-
-            if (botComment) {
-              github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: body
-              });
-            } else {
-              github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: body
-              });
-            }
-
-  build_and_push_to_dockerhub:
-    name: Build and Push to Docker Hub
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Extract metadata for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/r3edge-primer-react
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./docker/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+            | 🔍 **Latest deploy log** | [View Log](${runLink}) |
+            | 😎 **Deploy Preview** | [${previewLink}](${previewLink}) |
             | 🌐 **Reference Production** | [Production Site](${prodLink}) |
             `;
 
-            // Find and update a previous comment from this bot, or create a new one
-            const { data: comments } = await github.rest.issues.listComments({
+            github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
+              body: body
             });
-
-            const botComment = comments.find(comment =>
-              comment.user.login === 'github-actions[bot]'
-            );
-
-            if (botComment) {
-              github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: body
-              });
-            } else {
-              github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: body
-              });
-            }
 
   build_and_push_to_dockerhub:
     name: Build and Push to Docker Hub
