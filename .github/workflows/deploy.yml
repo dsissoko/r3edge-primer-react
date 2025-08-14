@@ -81,6 +81,7 @@ jobs:
         with:
           source-dir: dist
           umbrella-dir: pr-preview
+          pages-base-url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
           comment: false
 
       - name: Post custom comment
@@ -91,9 +92,9 @@ jobs:
             const shortSha = commitSha.substring(0, 7);
             const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
             const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
+            const prodLink = `https://${context.repo.owner}.github.io/${context.repo.repo}/`;
             const previewLink = `${{ steps.preview.outputs.preview_url }}`;
-
+            
             const body = `
             **Deployment Summary**
 
