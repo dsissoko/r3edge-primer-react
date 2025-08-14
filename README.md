@@ -64,14 +64,34 @@ Cette section décrit les différentes manières de déployer l'application.
 
 ### Déploiements Automatisés (CI/CD)
 
-Ce projet est configuré pour être déployé automatiquement sur les plateformes suivantes dès qu'un changement est poussé sur la branche `main`.
+Le workflow GitHub Actions de ce projet automatise entièrement le déploiement et la prévisualisation.
 
--   **GitHub Pages** : Déployé via l'action GitHub incluse.
-    -   URL de déploiement : [https://dsissoko.github.io/r3edge-primer-react/](https://dsissoko.github.io/r3edge-primer-react/)
+#### Prérequis pour l'automatisation
+
+Pour que la publication automatique sur Docker Hub fonctionne, vous devez configurer les secrets suivants dans les paramètres de votre dépôt (`Settings > Secrets and variables > Actions`):
+-   `DOCKERHUB_USERNAME`: Votre nom d'utilisateur Docker Hub.
+-   `DOCKERHUB_TOKEN`: Un token d'accès personnel avec les permissions `Read & Write`.
+
+#### Déclencheurs du Workflow
+
+-   **Push sur `main`** : Déclenche le déploiement en production.
+-   **Pull Request vers `main`** : Déclenche le déploiement d'un environnement de prévisualisation.
+
+#### Actions en Production (sur `main`)
+
+1.  **Déploiement sur GitHub Pages** : Le site est mis à jour sur sa branche principale.
+    -   URL de production : [https://dsissoko.github.io/r3edge-primer-react/](https://dsissoko.github.io/r3edge-primer-react/)
+2.  **Publication sur Docker Hub** : Une nouvelle image Docker `latest` est construite et poussée sur Docker Hub.
+
+#### Prévisualisation des Pull Requests
+
+-   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique.
+-   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements.
+
+#### Autres Plateformes
 
 -   **Vercel** : Liez votre dépôt à un nouveau projet Vercel. La configuration `vercel.json` sera détectée automatiquement.
     -   URL de déploiement : [https://r3edge-primer-react.netlify.app/](https://r3edge-primer-react.netlify.app/)
-
 -   **Netlify** : Liez votre dépôt à un nouveau site Netlify. La configuration `netlify.toml` sera détectée automatiquement.
     -   URL de déploiement : [https://r3edge-primer-react.netlify.app/](https://r3edge-primer-react.netlify.app/)
 
