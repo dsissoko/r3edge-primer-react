@@ -24,7 +24,7 @@ jobs:
         id: set_base_url
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "base_url=/" >> $GITHUB_OUTPUT
+            echo "base_url=/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}/" >> $GITHUB_OUTPUT
           else
             echo "base_url=/${{ github.event.repository.name }}/" >> $GITHUB_OUTPUT
           fi
@@ -63,40 +63,51 @@ jobs:
       id-token: write
     environment:
       name: pr-${{ github.event.number }}
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.preview.outputs.preview_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-      - name: Post Preview URL as comment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const commitSha = context.payload.pull_request.head.sha;
-            const shortSha = commitSha.substring(0, 7);
-            const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
-            const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
-            const previewLink = `${{ steps.deployment.outputs.page_url }}`;
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: github-pages
+        path: dist
 
-            const body = `
-            **Deployment Summary**
+    - name: Deploy PR Preview
+      id: preview
+      uses: rossjrw/pr-preview-action@v1
+      with:
+        source-dir: dist
+        umbrella-dir: pr-preview
+        comment: false
 
-            | Category | Link |
-            | :--- | :--- |
-            | 🔨 **Latest commit** | [${shortSha}](${commitLink}) |
-            | 🔍 **Latest deploy log** | [View Log](${runLink}) |
-            | 😎 **Deploy Preview** | [${previewLink}](${previewLink}) |
-            | 🌐 **Reference Production** | [Production Site](${prodLink}) |
-            `;
+    - name: Post custom comment
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const commitSha = context.payload.pull_request.head.sha;
+          const shortSha = commitSha.substring(0, 7);
+          const commitLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commitSha}`;
+          const runLink = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+          const prodLink = `https://dsissoko.github.io/r3edge-primer-react/`;
+          const previewLink = `${{ steps.preview.outputs.preview_url }}`;
 
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: body
-            });
+          const body = `
+          **Deployment Summary**
+
+          | Category | Link |
+          | :--- | :--- |
+          | 🔨 **Latest commit** | [${shortSha}](${commitLink}) |
+          | 🔍 **Latest deploy log** | [View Log](${runLink}) |
+          | 😎 **Deploy Preview** | [${previewLink}](${previewLink}) |
+          | 🌐 **Reference Production** | [Production Site](${prodLink}) |
+          `;
+
+          github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: body
+          });
 
   build_and_push_to_dockerhub:
     name: Build and Push to Docker Hub
