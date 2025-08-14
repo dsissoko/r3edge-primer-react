@@ -6,9 +6,10 @@ import browsers from '@github/browserslist-config'
 import { globSync } from 'glob'
 
 export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, process.cwd(), '')
+    //const env = loadEnv(mode, process.cwd(), '')
     return {
-        base: env.VITE_BASE_URL || '/',
+        //base: env.VITE_BASE_URL || '/',
+        base: process.env.VITE_BASE_URL || '/',
         plugins: [react()],
         server: { port: 1234 },
         css: {
