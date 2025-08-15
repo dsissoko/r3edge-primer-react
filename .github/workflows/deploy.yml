@@ -127,7 +127,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.D-OCKERHUB_USERNAME }}/r3edge-primer-react
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/r3edge-primer-react
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
