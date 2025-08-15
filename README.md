@@ -134,7 +134,7 @@ Le projet inclut un script pour simplifier le processus de build.
     ./docker/build.sh
     ```
 
-#### Lancement du Conteneur
+#### Lancement de Conteneur
 
 Une fois l'image construite, vous pouvez la lancer localement.
 
