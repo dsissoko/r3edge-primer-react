@@ -55,7 +55,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist
           # This will clean the root of the gh-pages branch for a clean deployment
-          keep_files: false
+          keep_files: true
 
   deploy_preview:
     name: Deploy Preview to gh-pages
