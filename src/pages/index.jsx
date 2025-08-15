@@ -29,7 +29,7 @@ function Playground() {
                         icon={CheckIcon}
                         iconColor="var(--fgColor-success)"
                     >
-                        Mona&apos;s playground successfully initialised...
+                        David&apos;s playground successfully initialised...
                     </CodeLine>
                     <CodeLine
                         icon={CommentIcon}
