@@ -58,6 +58,56 @@ Vous devez avoir Node.js (version spécifiée dans `.nvmrc`) et Yarn installés 
 
 ---
 
+## 🔧 Configuration Post-Clonage
+
+Pour que ce template fonctionne pleinement avec ses fonctionnalités de déploiement et de prévisualisation, une configuration initiale est requise après l'avoir cloné ou utilisé.
+
+Ce guide vous explique les étapes cruciales à suivre.
+
+### 1. Configuration de GitHub Pages (Crucial)
+
+Ce template utilise une stratégie de déploiement sur une branche dédiée nommée `gh-pages`. C'est la méthode la plus robuste pour gérer à la fois un site de production et des environnements de prévisualisation temporaires pour les Pull Requests.
+
+**Le concept de la branche `gh-pages` :**
+-   Votre branche `main` contient le **code source** de votre application (React, JSX, etc.).
+-   La branche `gh-pages` contient le **site web compilé et prêt à être servi** (fichiers HTML, CSS, JS purs).
+-   Le workflow GitHub Actions se charge de compiler le code de `main` et de pousser le résultat sur `gh-pages` automatiquement.
+
+**Actions requises :**
+
+1.  Allez dans les paramètres de votre dépôt : `Settings` > `Pages`.
+2.  Dans la section `Build and deployment`, sous `Source`, sélectionnez **`Deploy from a branch`**.
+3.  Dans les menus déroulants qui apparaissent, configurez :
+    -   **Branch** : `gh-pages`
+    -   **Folder** : `/(root)`
+4.  Cliquez sur **Save**.
+
+Cette configuration unique indique à GitHub de servir le contenu de la branche `gh-pages` comme votre site web.
+
+### 2. Configuration des Secrets pour les Workflows
+
+Le workflow a besoin de secrets pour se connecter à des services externes comme Docker Hub.
+
+1.  Allez dans les paramètres de votre dépôt : `Settings` > `Secrets and variables` > `Actions`.
+2.  Cliquez sur `New repository secret` et ajoutez les secrets suivants :
+    -   `DOCKERHUB_USERNAME` : Votre nom d'utilisateur Docker Hub.
+    -   `DOCKERHUB_TOKEN` : Un [token d'accès personnel](https://hub.docker.com/settings/security) Docker Hub avec les permissions `Read & Write`.
+
+Le secret `GITHUB_TOKEN` est fourni automatiquement par GitHub et n'a pas besoin d'être configuré.
+
+### 3. Configuration pour Vercel et Netlify
+
+Ce template est prêt à être déployé sur Vercel et Netlify.
+
+1.  Créez un nouveau projet sur Vercel ou Netlify.
+2.  Liez votre dépôt GitHub.
+3.  Les plateformes détecteront automatiquement les fichiers de configuration (`vercel.json` ou `netlify.toml`) et appliqueront les bons paramètres de build (`npm run build`) et le bon dossier de sortie (`dist`).
+4.  Ces plateformes gèrent nativement les prévisualisations de Pull Requests, vous n'avez rien de plus à configurer.
+
+Une fois ces étapes terminées, votre dépôt cloné se comportera exactement comme le template original, avec des déploiements et des prévisualisations entièrement automatisés.
+
+---
+
 ## 🚀 Plateformes de Déploiement
 
 Cette section décrit les différentes manières de déployer l'application.
