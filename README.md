@@ -102,7 +102,30 @@ Ce template est prêt à être déployé sur Vercel et Netlify.
 1.  Créez un nouveau projet sur Vercel ou Netlify.
 2.  Liez votre dépôt GitHub.
 3.  Les plateformes détecteront automatiquement les fichiers de configuration (`vercel.json` ou `netlify.toml`) et appliqueront les bons paramètres de build (`npm run build`) et le bon dossier de sortie (`dist`).
-4.  Ces plateformes gèrent nativement les prévisualisations de Pull Requests, vous n'avez rien de plus à configurer.
+
+> **Note importante pour Vercel :**  
+> Par défaut, Vercel essaiera de construire et de déployer *chaque* branche, y compris la branche `gh-pages` utilisée par notre workflow GitHub Actions. Cela provoquera une erreur, car `gh-pages` contient un site déjà construit, et non du code source.
+>
+> Pour corriger cela, vous devez indiquer à Vercel d'ignorer cette branche :
+> 1.  Dans les paramètres de votre projet Vercel, allez à `Settings` > `Git`.
+> 2.  Trouvez la section **Ignored Build Step**.
+> 3.  Dans le champ de commande, collez la ligne suivante :
+>     ```bash
+>     if [[ "$VERCEL_GIT_COMMIT_REF" == "gh-pages" ]] ; then exit 0; else exit 1; fi
+>     ```
+> 4.  Sauvegardez. Cela annulera proprement les builds pour la branche `gh-pages` sans générer d'erreur.
+
+Ces plateformes gèrent nativement les prévisualisations de Pull Requests (pour les branches de feature), vous n'avez rien de plus à configurer pour cette partie.
+
+#### Cycle de Vie et Nettoyage des Prévisualisations
+
+Il est important de comprendre que les plateformes hébergées et notre solution sur GitHub Pages ne gèrent pas le nettoyage des anciens environnements de prévisualisation de la même manière :
+
+-   **Vercel :** Le cycle de vie d'une prévisualisation est lié à sa branche Git. Lorsque vous **supprimez la branche** après avoir mergé une Pull Request, Vercel supprime automatiquement tous les déploiements de prévisualisation qui y étaient associés.
+
+-   **Netlify :** Le cycle de vie est lié à la Pull Request elle-même. Lorsque vous **fermez ou mergez la Pull Request**, Netlify supprime automatiquement le "Deploy Preview" correspondant.
+
+-   **GitHub Pages (notre solution) :** Il n'y a **aucun nettoyage automatique**. Les dossiers de prévisualisation (ex: `/pr-preview/pr-123/`) créés sur la branche `gh-pages` **persisteront** même après la fermeture de la PR. C'est un comportement intentionnel de notre workflow actuel pour conserver un historique, mais qui peut être modifié pour inclure une étape de nettoyage si nécessaire.
 
 Une fois ces étapes terminées, votre dépôt cloné se comportera exactement comme le template original, avec des déploiements et des prévisualisations entièrement automatisés.
 
