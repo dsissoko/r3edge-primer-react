@@ -202,12 +202,16 @@ Une fois l'image construite, vous pouvez la lancer localement.
 
 ## 📦 Stack de référence
 
-✅ Cette librairie a été conçue et testée avec :
+✅ Cette application s'appuie sur :
 
-- Java 17+
-- Spring Boot 3.x
-- Hazelcast 5.x
-- Spring Cloud Config Server et Spring Cloud Bus *(pour le support du rafraîchissement dynamique, optionnel)*
+- Node 20 (build via Docker)
+- React 19.1 + React DOM 19
+- Vite 7 + `@vitejs/plugin-react`
+- Primer React 37 & `@primer/octicons-react`
+- React Router DOM 7
+- Styled-components 5
+- ESLint 9 + PostCSS 10
+- Nginx (serveur de production)
 
 ---
 
