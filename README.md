@@ -4,67 +4,64 @@
 
 > 🚀 **Pourquoi utiliser ce template ?**
 > 
-> ✅ **Fondation Solide** : Basé sur le template officiel [Primer React](https://primer.style/react/) de GitHub.  
-> ✅ **Développement Rapide** : Profitez de l'écosystème Vite pour une expérience de développement instantanée.  
-> ✅ **Déploiement Universel** : Pré-configuré pour un déploiement en un clic sur Vercel, Netlify et GitHub Pages.  
-> ✅ **Pipeline CICD moderne** : 1 commit déclenche 1 build et 1 deploy, 1 Pull Request génére des environnements de preview accessibles sur Netlify et sur Vercel.  
-> ✅ **Environnement Conteneurisé** : Entièrement compatible avec GitHub Codespaces pour un environnement de développement reproductible.  
-> ✅ **Qualité de Code** : Intègre ESLint et Prettier pour maintenir un code propre et cohérent.  
+> ✅ **Fondation Solide** : Basé sur le template officiel [Primer React](https://primer.style/react/) de GitHub.    
+> ✅ **Déploiement Universel** : Pré-configuré pour un déploiement en un clic sur Vercel, Netlify, GitHub Pages et Docker Hub.  
+> ✅ **Pipeline CICD moderne** : 1 commit déclenche 1 build et 1 deploy, 1 Pull Request génére des environnements de preview accessibles sur Vercel, Netlify et Github Pages.  
+> ✅ **Environnement de développement moderne** : Entièrement compatible avec GitHub Codespaces ou le développement local sous VSC.  
+> ✅ **Usage de bots** : Maintenez vos dépendances à jour en permanence avec Dependabot, codez vos évolutions à l'aide de gemini clin ou Open Hands  
 
 ---
 
 ## 📋 Fonctionnalités clés
 
-- ✅ **Stack Moderne** : React 19 + Vite.
-- ✅ **UI Robuste** : Intégration complète du système de design [Primer React](https://primer.style/react/).
+- ✅ **Template d'une Stack Moderne** : React 19 + Vite + Primer.
 - ✅ **Routage Standard** : Utilise `react-router-dom` pour un contrôle total et une flexibilité maximale.
 - ✅ **Déploiement Simplifié** : Fichiers de configuration `vercel.json` et `netlify.toml` inclus.
 - ✅ **Workflow CI/CD** : Action GitHub prête à l'emploi pour construire et déployer sur GitHub Pages.
-- ✅ **Environnement Isolé** : Configuration Devcontainer pour une expérience de développement cohérente dans VS Code et Codespaces.
 
 ---
 
 ## ⚙️ Démarrage Rapide
 
-### Option 1 : GitHub Codespaces (Recommandé)
+Cliquez sur **Use this template** > **Create a new repository**.
+Choisssez le nom de votre projet et sa visibilité
+> ⚠️ Github Pages ne fonctionnent pas sur les dépôt privés gratuits.
 
-1.  Cliquez sur **Use this template** > **Open in a codespace**.
-2.  Une fois le codespace initialisé, le terminal s'ouvrira. Les dépendances seront installées automatiquement.
-3.  Le serveur de développement démarrera. Allez dans l'onglet **PORTS** et ouvrez l'URL publique pour voir votre application.
+### Pour le développement
 
-![Screenshot showing the ports tab and Port URL](.readme/image-ports-1.png)
+- Avec CodeSpaces :
 
-### Option 2 : Développement Local
+    `<> Code` > onglet `Codespaces` > `Create codespace on main`
 
-Vous devez avoir Node.js (version spécifiée dans `.nvmrc`) et Yarn installés sur votre machine.
+- Avec VSC en local: 
 
-1.  Clonez le dépôt sur votre machine locale :
     ```bash
     git clone https://github.com/VOTRE_USER/VOTRE_REPO.git
     cd VOTRE_REPO
     ```
-
-2.  Installez les dépendances :
+    Lancez VSC et ouvrez un terminal puis:
     ```bash
     npm install
-    ```
-
-3.  Lancez le serveur de développement :
-    ```bash
     npm run dev
     ```
-
-4.  Ouvrez votre navigateur et allez sur `http://localhost:1234`.
-
 ---
 
-## 🔧 Configuration Post-Clonage
+### Pour le CICD
 
-Pour que ce template fonctionne pleinement avec ses fonctionnalités de déploiement et de prévisualisation, une configuration initiale est requise après l'avoir cloné ou utilisé.
+une fois votre dépôt créé, Github va générer un 1er commit intitulé “Initial commit” et le pousser sur main. C’est ce push qui déclenche le workflow de l'action deploy.yml automatiquement.
+Cette action est constituée de 4 jobs:
+ 1. le build du code react
+ 2. le déploiement en production sur github pages
+ 3. le déploiement en preview sur github pages
+ 4. la construction d'un container et son upload sur DOcker Hub
 
-Ce guide vous explique les étapes cruciales à suivre.
+ Lors du 1er commit, étant donné que vous n'avez pas encore configuré votre dépôt, le job docker échoue, le job deploy preview est skippé car il n'est déclenché que sur Pull request. Et donc le Workflow "Deploy & Preview" est en échec et c'est normal car il faut configurer maintenant votre dépôt Github pour profiter de toutes les features de **r3edge-primer-react**.
 
-### 1. Configuration de GitHub Pages (Crucial)
+![Screenshot showing the result of the 1st build workflow](.readme/1stbuild.png)
+
+### 🔧 Configuration Post-Clonage
+
+#### 1. Configuration de GitHub Pages (Crucial)
 
 Ce template utilise une stratégie de déploiement sur une branche dédiée nommée `gh-pages`. C'est la méthode la plus robuste pour gérer à la fois un site de production et des environnements de prévisualisation temporaires pour les Pull Requests.
 
@@ -84,7 +81,7 @@ Ce template utilise une stratégie de déploiement sur une branche dédiée nomm
 
 Cette configuration unique indique à GitHub de servir le contenu de la branche `gh-pages` comme votre site web.
 
-### 2. Configuration des Secrets pour les Workflows
+#### 2. Configuration des Secrets pour les Workflows
 
 Le workflow a besoin de secrets pour se connecter à des services externes comme Docker Hub.
 
@@ -127,23 +124,11 @@ Il est important de comprendre que les plateformes hébergées et notre solution
 
 -   **GitHub Pages (notre solution) :** Il n'y a **aucun nettoyage automatique**. Les dossiers de prévisualisation (ex: `/pr-preview/pr-123/`) créés sur la branche `gh-pages` **persisteront** même après la fermeture de la PR. C'est un comportement intentionnel de notre workflow actuel pour conserver un historique, mais qui peut être modifié pour inclure une étape de nettoyage si nécessaire.
 
-Une fois ces étapes terminées, votre dépôt cloné se comportera exactement comme le template original, avec des déploiements et des prévisualisations entièrement automatisés.
+Une fois ces étapes terminées, votre dépôt cloné se comportera exactement comme le template original, avec des déploiements et des prévisualisations sur PR entièrement automatisés.
 
----
+![Screenshot showing github pages preview job](.readme/pr-preview.png)
 
-## 🚀 Plateformes de Déploiement
 
-Cette section décrit les différentes manières de déployer l'application.
-
-### Déploiements Automatisés (CI/CD)
-
-Le workflow GitHub Actions de ce projet automatise entièrement le déploiement et la prévisualisation.
-
-#### Prérequis pour l'automatisation
-
-Pour que la publication automatique sur Docker Hub fonctionne, vous devez configurer les secrets suivants dans les paramètres de votre dépôt (`Settings > Secrets and variables > Actions`):
--   `DOCKERHUB_USERNAME`: Votre nom d'utilisateur Docker Hub.
--   `DOCKERHUB_TOKEN`: Un token d'accès personnel avec les permissions `Read & Write`.
 
 #### Déclencheurs du Workflow
 
@@ -161,12 +146,7 @@ Pour que la publication automatique sur Docker Hub fonctionne, vous devez config
 -   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique.
 -   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements.
 
-#### Autres Plateformes
 
--   **Vercel** : Liez votre dépôt à un nouveau projet Vercel. La configuration `vercel.json` sera détectée automatiquement.
-    -   URL de déploiement : [https://r3edge-primer-react.netlify.app/](https://r3edge-primer-react.netlify.app/)
--   **Netlify** : Liez votre dépôt à un nouveau site Netlify. La configuration `netlify.toml` sera détectée automatiquement.
-    -   URL de déploiement : [https://r3edge-primer-react.netlify.app/](https://r3edge-primer-react.netlify.app/)
 
 ### Déploiement par Conteneur (Docker)
 
@@ -174,7 +154,7 @@ Cette sous-section décrit comment construire et exécuter l'application en tant
 
 #### Prérequis
 
-1.  **Docker Desktop** : Assurez-vous que Docker est installé et en cours d'exécution sur votre machine.
+1.  **Docker** : Assurez-vous que Docker est installé et en cours d'exécution sur votre machine.
 2.  **Authentification Docker Hub** : Vous devez avoir un compte Docker Hub et être connecté via votre terminal.
 
 #### Configuration Initiale (à faire une seule fois)
@@ -218,12 +198,13 @@ Une fois l'image construite, vous pouvez la lancer localement.
       -e BACKEND_API_URL="https://votre-api.domaine.com/api" \
       votrenomdutilisateur/r3edge-primer-react:latest
     ```
-    N'oubliez pas de remplacer `votrenomdutilisateur` par votre nom d'utilisateur Docker Hub.
 
 2.  **Accédez à l'application :**
     Ouvrez votre navigateur et allez sur `http://localhost:8080`.
 
 ---
+
+
 
 [![Dependabot Updates](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/dependabot/dependabot-updates) [![Deploy](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/deploy.yml/badge.svg)](https://github.com/dsissoko/r3edge-primer-react/actions/workflows/deploy.yml) [![Netlify Status](https://api.netlify.com/api/v1/badges/0425ea76-64ff-43bc-b478-ea228b042648/deploy-status)](https://app.netlify.com/projects/r3edge-primer-react/deploys)
 
