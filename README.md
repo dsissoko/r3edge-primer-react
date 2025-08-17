@@ -59,7 +59,7 @@ Cette action est constituée de 4 jobs:
 
 ![Screenshot showing the result of the 1st build workflow](.readme/1stbuild.png)
 
-### 🔧 Configuration Post-Clonage
+### 📌 Configuration Post-Clonage
 
 #### 1. Configuration de GitHub Pages (Crucial)
 
@@ -128,9 +128,7 @@ Une fois ces étapes terminées, votre dépôt cloné se comportera exactement c
 
 ![Screenshot showing github pages preview job](.readme/pr-preview.png)
 
-
-
-#### Déclencheurs du Workflow
+#### 3. Déclencheurs du Workflow
 
 -   **Push sur `main`** : Déclenche le déploiement en production.
 -   **Pull Request vers `main`** : Déclenche le déploiement d'un environnement de prévisualisation.
@@ -148,11 +146,11 @@ Une fois ces étapes terminées, votre dépôt cloné se comportera exactement c
 
 
 
-### Déploiement par Conteneur (Docker)
+### 📌 Déploiement par Conteneur (Docker)
 
 Cette sous-section décrit comment construire et exécuter l'application en tant que conteneur Docker.
 
-#### Prérequis
+#### 1. Prérequis
 
 1.  **Docker** : Assurez-vous que Docker est installé et en cours d'exécution sur votre machine.
 2.  **Authentification Docker Hub** : Vous devez avoir un compte Docker Hub et être connecté via votre terminal.
@@ -172,7 +170,7 @@ Cette sous-section décrit comment construire et exécuter l'application en tant
     docker login
     ```
 
-#### Build de l'Image
+#### 2. Build de l'Image
 
 Le projet inclut un script pour simplifier le processus de build.
 
@@ -187,7 +185,7 @@ Le projet inclut un script pour simplifier le processus de build.
     ./docker/build.sh
     ```
 
-#### Lancement de Conteneur
+#### 3. Lancement de Conteneur
 
 Une fois l'image construite, vous pouvez la lancer localement.
 
