@@ -4,7 +4,7 @@
 
 > 🚀 **Pourquoi utiliser ce template ?**
 > 
-> ✅ **Fondation Solide** : Basé sur le template officiel [Primer React](https://primer.style/react/) de GitHub.    
+> ✅ **Fondation Solide** : Basé sur le template officiel [Primer React](https://github.com/primer/react-template) de GitHub.    
 > ✅ **Déploiement Universel** : Pré-configuré pour un déploiement en un clic sur Vercel, Netlify, GitHub Pages et Docker Hub.  
 > ✅ **Pipeline CICD moderne** : 1 commit déclenche 1 build et 1 deploy, 1 Pull Request génére des environnements de preview accessibles sur Vercel, Netlify et Github Pages.  
 > ✅ **Environnement de développement moderne** : Entièrement compatible avec GitHub Codespaces ou le développement local sous VSC.  
