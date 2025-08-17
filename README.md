@@ -46,7 +46,7 @@ Choisssez le nom de votre projet et sa visibilité
     ```
 ---
 
-### Le 1er buil & Deploy
+### Le 1er build & Deploy
 
 une fois votre dépôt créé, Github va générer un 1er commit intitulé “Initial commit” et le pousser sur main. C’est ce push qui déclenche le workflow de l'action deploy.yml automatiquement.
 Cette action est constituée de 4 jobs:
@@ -126,24 +126,24 @@ Il est important de comprendre que les plateformes hébergées et notre solution
 
 Une fois ces étapes terminées, votre dépôt cloné se comportera exactement comme le template original, avec des déploiements et des prévisualisations sur PR entièrement automatisés.
 
-![Screenshot showing github pages preview job](.readme/pr-preview.png)
-
 #### 3. Déclencheurs du Workflow
 
 -   **Push sur `main`** : Déclenche le déploiement en production.
 -   **Pull Request vers `main`** : Déclenche le déploiement d'un environnement de prévisualisation.
 
-#### Actions en Production (sur `main`)
+#### 4. Actions en Production (sur `main`)
 
 1.  **Déploiement sur GitHub Pages** : Le site est mis à jour sur sa branche principale.
     -   URL de production : [https://dsissoko.github.io/r3edge-primer-react/](https://dsissoko.github.io/r3edge-primer-react/)
 2.  **Publication sur Docker Hub** : Une nouvelle image Docker `latest` est construite et poussée sur Docker Hub.
 
-#### Prévisualisation des Pull Requests
+#### 5. Prévisualisation des Pull Requests
 
 -   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique.
 -   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements.
 
+
+![Screenshot showing github pages preview job](.readme/pr-preview.png)
 
 
 ### 📌 Déploiement par Conteneur (Docker)
@@ -155,7 +155,7 @@ Cette sous-section décrit comment construire et exécuter l'application en tant
 1.  **Docker** : Assurez-vous que Docker est installé et en cours d'exécution sur votre machine.
 2.  **Authentification Docker Hub** : Vous devez avoir un compte Docker Hub et être connecté via votre terminal.
 
-#### Configuration Initiale (à faire une seule fois)
+#### 2. Configuration Initiale (à faire une seule fois)
 
 1.  **Créez votre fichier de configuration :**
     Copiez le fichier d'exemple `.env.example` pour créer votre propre configuration locale.
@@ -170,7 +170,7 @@ Cette sous-section décrit comment construire et exécuter l'application en tant
     docker login
     ```
 
-#### 2. Build de l'Image
+#### 3. Build de l'Image
 
 Le projet inclut un script pour simplifier le processus de build.
 
@@ -185,7 +185,7 @@ Le projet inclut un script pour simplifier le processus de build.
     ./docker/build.sh
     ```
 
-#### 3. Lancement de Conteneur
+#### 4. Lancement de Conteneur
 
 Une fois l'image construite, vous pouvez la lancer localement.
 
