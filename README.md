@@ -114,7 +114,7 @@ Ce template est prêt à être déployé sur Vercel et Netlify.
 
 Ces plateformes gèrent nativement les prévisualisations de Pull Requests (pour les branches de feature), vous n'avez rien de plus à configurer pour cette partie.
 
-#### 3. Cycle de Vie et Nettoyage des Prévisualisations
+#### 4. Cycle de Vie et Nettoyage des Prévisualisations
 
 Il est important de comprendre que les plateformes hébergées et notre solution sur GitHub Pages ne gèrent pas le nettoyage des anciens environnements de prévisualisation de la même manière :
 
@@ -126,25 +126,23 @@ Il est important de comprendre que les plateformes hébergées et notre solution
 
 Une fois ces étapes terminées, votre dépôt cloné se comportera exactement comme le template original, avec des déploiements et des prévisualisations sur PR entièrement automatisés.
 
-#### 4. Déclencheurs du Workflow
+#### 5. Déclencheurs du Workflow
 
 -   **Push sur `main`** : Déclenche le déploiement en production.
 -   **Pull Request vers `main`** : Déclenche le déploiement d'un environnement de prévisualisation.
 
-#### 5. Actions en Production (sur `main`)
+#### 6. Actions en Production (sur `main`)
 
 1.  **Déploiement sur GitHub Pages** : Le site est mis à jour sur sa branche principale.
     -   URL de production : [https://dsissoko.github.io/r3edge-primer-react/](https://dsissoko.github.io/r3edge-primer-react/)
 2.  **Publication sur Docker Hub** : Une nouvelle image Docker `latest` est construite et poussée sur Docker Hub.
 
-#### 6. Prévisualisation des Pull Requests
+#### 7. Prévisualisation des Pull Requests
 
 -   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique.
 -   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements.
 
-
 ![Screenshot showing github pages preview job](.readme/pr-preview.png)
-
 
 ### 📌 Déploiement par Conteneur (Docker)
 
