@@ -46,7 +46,7 @@ Choisssez le nom de votre projet et sa visibilité
     ```
 ---
 
-### Pour le CICD
+### Le 1er buil & Deploy
 
 une fois votre dépôt créé, Github va générer un 1er commit intitulé “Initial commit” et le pousser sur main. C’est ce push qui déclenche le workflow de l'action deploy.yml automatiquement.
 Cette action est constituée de 4 jobs:
@@ -92,7 +92,7 @@ Le workflow a besoin de secrets pour se connecter à des services externes comme
 
 Le secret `GITHUB_TOKEN` est fourni automatiquement par GitHub et n'a pas besoin d'être configuré.
 
-### 3. Configuration pour Vercel et Netlify
+#### 3. Configuration pour Vercel et Netlify
 
 Ce template est prêt à être déployé sur Vercel et Netlify.
 
