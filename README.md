@@ -24,8 +24,8 @@
 ## ⚙️ Démarrage Rapide
 
 Cliquez sur **Use this template** > **Create a new repository**.
-Choisssez le nom de votre projet et sa visibilité
-> ⚠️ Github Pages ne fonctionnent pas sur les dépôt privés gratuits.
+Choisissez le nom de votre projet et sa visibilité
+> ⚠️ Github Pages ne fonctionnent pas sur les dépôts privés gratuits.
 
 ### Pour le développement
 
