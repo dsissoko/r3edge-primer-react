@@ -139,8 +139,8 @@ Une fois ces étapes terminées, votre dépôt cloné se comportera exactement c
 
 #### 7. Prévisualisation des Pull Requests
 
--   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique.
--   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements.
+-   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique
+-   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements: Exemple d'URL de preview : [https://dsissoko.github.io/r3edge-primer-react/pr-preview/pr-19/](https://dsissoko.github.io/r3edge-primer-react/pr-preview/pr-19/).
 
 ![Screenshot showing github pages preview job](.readme/pr-preview.png)
 
@@ -191,7 +191,7 @@ Une fois l'image construite, vous pouvez la lancer localement.
     Cette commande démarre le conteneur, mappe le port 80 du conteneur au port 8080 de votre machine, et injecte une URL d'API backend.
     ```bash
     docker run -p 8080:80 \
-      -e BACKEND_API_URL="https://votre-api.domaine.com/api" \
+      -e BACKEND_API_URL="https://votre-app.domaine.com/api" \
       votrenomdutilisateur/r3edge-primer-react:latest
     ```
 
