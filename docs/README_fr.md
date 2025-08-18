@@ -1,4 +1,4 @@
-# r3edge Primer React Template | ![Logo](logo_ds.png)
+# r3edge Primer React Template | ![Logo](../.readme/logo_ds.png)
 
 **Un template de démarrage pour React, suralimenté pour des déploiements multi-plateformes fluides.**
 
@@ -10,7 +10,7 @@
 > ✅ **Environnement de développement moderne** : Entièrement compatible avec GitHub Codespaces ou le développement local sous VSC.  
 > ✅ **Usage de bots** : Maintenez vos dépendances à jour en permanence avec Dependabot, codez vos évolutions à l'aide de gemini clin ou Open Hands  
 
-This README is also available in English 🇺🇸 here: [👉 docs/README_en.md](docs/README_fr.md)
+This README is also available in English 🇺🇸 here: [👉 docs/README_en.md](../README_fr.md)
 
 ---
 
@@ -59,7 +59,7 @@ Cette action est constituée de 4 jobs:
 
  Lors du 1er commit, étant donné que vous n'avez pas encore configuré votre dépôt, le job docker échoue, le job deploy preview est skippé car il n'est déclenché que sur Pull request. Et donc le Workflow "Deploy & Preview" est en échec et c'est normal car il faut configurer maintenant votre dépôt Github pour profiter de toutes les features de **r3edge-primer-react**.
 
-![Screenshot showing the result of the 1st build workflow](.readme/1stbuild.png)
+![Screenshot showing the result of the 1st build workflow](../.readme/1stbuild.png)
 
 ### 📌 Configuration Post-Clonage
 
@@ -144,7 +144,7 @@ Une fois ces étapes terminées, votre dépôt cloné se comportera exactement c
 -   Pour chaque Pull Request ouverte, une **version de prévisualisation** du site est automatiquement déployée sur une URL unique
 -   Le workflow poste un **commentaire dans la PR** avec un lien direct vers cet environnement, permettant une revue visuelle immédiate des changements: Exemple d'URL de preview : [https://dsissoko.github.io/r3edge-primer-react/pr-preview/pr-19/](https://dsissoko.github.io/r3edge-primer-react/pr-preview/pr-19/).
 
-![Screenshot showing github pages preview job](.readme/pr-preview.png)
+![Screenshot showing github pages preview job](../.readme/pr-preview.png)
 
 ### 📌 Déploiement par Conteneur (Docker)
 

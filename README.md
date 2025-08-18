@@ -1,4 +1,4 @@
-# r3edge Primer React Template | ![Logo](logo_ds.png)
+# r3edge Primer React Template | ![Logo](.readme/logo_ds.png)
 
 **A starter template for React, supercharged for seamless multi-platform deployments.**
 
