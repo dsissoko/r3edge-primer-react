@@ -5,8 +5,9 @@ import postcssPresetEnv from 'postcss-preset-env'
 import browsers from '@github/browserslist-config'
 import { globSync } from 'glob'
 
-export default defineConfig({
-    base: process.env.VITE_BASE_URL || '/',
+export default defineConfig(({ mode }) => {
+    return {
+        base: process.env.VITE_BASE_URL || '/',
         plugins: [react()],
         server: { port: 1234 },
         css: {
