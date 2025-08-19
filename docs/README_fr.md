@@ -10,7 +10,7 @@
 > ✅ **Environnement de développement moderne** : Entièrement compatible avec GitHub Codespaces ou le développement local sous VSC.  
 > ✅ **Usage de bots** : Maintenez vos dépendances à jour en permanence avec Dependabot, codez vos évolutions à l'aide de gemini clin ou Open Hands  
 
-This README is also available in English 🇺🇸 here: [👉 docs/README_en.md](../README_fr.md)
+This README is also available in English 🇺🇸 here: [👉 README.md](../README.md)
 
 ---
 
