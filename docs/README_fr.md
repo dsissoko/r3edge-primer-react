@@ -220,10 +220,10 @@ Une fois l'image construite, vous pouvez la lancer localement.
 ## 🗺️ Roadmap
 
 ### 🔧 À venir
-- ...
+- Exemples de tests unitaires (Vitest + React Testing Library)
 
 ### 🧠 En réflexion
-- ...
+- Bots IA Open Hands et Gemini Cli
 
 ---
 

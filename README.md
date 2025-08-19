@@ -202,11 +202,11 @@ Open [http://localhost:8080](http://localhost:8080).
 
 ## 🗺️ Roadmap
 
-### 🔧 Coming Soon
-- ...
+### 🔧 Next
+- Unit test examples (Vitest + React Testing Library)
 
 ### 🧠 Under Consideration
-- ...
+- AI bots Open Hands and Gemini CLI
 
 ---
 
