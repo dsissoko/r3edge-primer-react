@@ -8,7 +8,7 @@
 > ✅ **Universal Deployment**: Pre-configured for one-click deployment to Vercel, Netlify, GitHub Pages, and Docker Hub.  
 > ✅ **Modern CI/CD Pipeline**: One commit triggers one build and one deploy. Each Pull Request generates preview environments accessible on Vercel, Netlify, and GitHub Pages.  
 > ✅ **Modern Development Environment**: Fully compatible with GitHub Codespaces or local development in VSC.  
-> ✅ **Bot Usage**: Keep dependencies always up to date with Dependabot, and code your features using Gemini CLI or Open Hands.  
+> ✅ **Bot Usage (coming soon)**: Keep dependencies always up to date with Dependabot, and code your features using Gemini CLI or Open Hands agents.  
 
 Ce README est également disponible en Français 🇫🇷 ici: [👉 docs/README_fr.md](docs/README_fr.md)
 
